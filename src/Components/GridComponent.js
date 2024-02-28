@@ -1,18 +1,48 @@
-import React from "react";
-import { Grid, TextField, IconButton } from "@material-ui/core";
+import React, { useState } from "react";
+import { Grid, TextField, IconButton, MenuItem } from "@material-ui/core";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
-const GridComponent = ({ layout, index, changeField, onChange, removeField }) => (
+const GridComponent = ({ layout, index, changeField, onChange, removeField }) => {
+  const [dateFormat, setDateFormat] = useState('dd/MM/yyyy');
+
+
+  const handleDateFormatChange = (event) => {
+    setDateFormat(event.target.value);
+  }
+
+  // Lista de formatos de data
+  const dateFormats = [
+    { label: 'dd/MM/yyyy', value: 'dd/MM/yyyy' },
+    { label: 'MM/dd/yyyy', value: 'MM/dd/yyyy' },
+    { label: 'yyyy/MM/dd', value: 'yyyy/MM/dd' },
+    { label: 'dd-MM-yyyy', value: 'dd-MM-yyyy' },
+    { label: 'MM-dd-yyyy', value: 'MM-dd-yyyy' },
+    { label: 'yyyy-MM-dd', value: 'yyyy-MM-dd' },
+    { label: 'dd.MM.yyyy', value: 'dd.MM.yyyy' },
+    { label: 'MM.dd.yyyy', value: 'MM.dd.yyyy' },
+    { label: 'yyyy.MM.dd', value: 'yyyy.MM.dd' },
+  ];
+
+  return (
   <Grid container spacing={3} key={index}>
     {layout.date ? (
       <Grid item xs={12} md={3}>
         <TextField
-          label="Data"
+          select
+          label="Formato da Data"
           variant="outlined"
           fullWidth
-          disabled
-          value={layout.date.toLocaleDateString()}
-        />
+          value={dateFormat}
+          onChange={handleDateFormatChange}
+        >
+
+      {dateFormats.map((format, index) => (
+            <MenuItem key={index} value={format.value}>
+              {format.label}
+            </MenuItem>
+          ))}
+
+    </TextField>    
       </Grid>
     ) : (
       <>
@@ -65,6 +95,7 @@ const GridComponent = ({ layout, index, changeField, onChange, removeField }) =>
       </IconButton>
     </Grid>
   </Grid>
-);
+  )
+};
 
 export default GridComponent;
