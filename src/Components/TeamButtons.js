@@ -2,6 +2,8 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+
+
 const useStyles = makeStyles((theme) => ({
   addFieldButton: {
     display: "flex",
@@ -10,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TeamButtons({ addRows }) {
+function TeamButtons({ addRows, buttonUpdate }) {
   const classes = useStyles();
 
   return (
@@ -27,7 +29,7 @@ function TeamButtons({ addRows }) {
       </Grid>
       <Grid item xs={12} md={3} container justify="flex-end">
         <Button variant="contained" color="primary">
-          Criar Layout
+          {buttonUpdate == true ? 'Atualizar Layout' : 'Criar Layout'}
         </Button>
       </Grid>
     </Grid>

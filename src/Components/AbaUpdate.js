@@ -5,7 +5,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import SaveIcon from "@material-ui/icons/Save";
 
 
-const AbaUpdate = ({ layout, index, changeField, onChange, removeField, addRows }) => {
+const AbaUpdate = ({ layout, index, changeField, onChange, removeField}) => {
   const [dateFormat, setDateFormat] = useState('dd/MM/yyyy');
   const [dados, setDados] = useState({
     nome: "",

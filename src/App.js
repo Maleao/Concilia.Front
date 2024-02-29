@@ -10,7 +10,7 @@ import FileUploadButton from "./Components/FileUploadButton.js";
 import AbaUpdate from "./Components/AbaUpdate.js";
 
 
-/****************************************STYLE*************************************************/
+/*==================STYLE==========================*/
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100vw",
@@ -34,19 +34,17 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
   },
 }));
-/********************************************************************************************/
-
-/*****************************************FUNCTIONS********************************************/
+/*=====================STYLE-END=============================*/
 
 
-
-
+/*======================CHAMADA APP=========================*/
 function App() {
   const classes = useStyles();
   const [showAlert, setShowAlert] = useState(true);
   const [mostrarNovaAba, setMostrarNovaAba] = useState(false);
   const layoutTemplate = { name: "", pinicial: "", pfinal: "", size: "" };
   const [layouts, setLayout] = useState([layoutTemplate,]);
+  const [buttonUpdate, setButtonUpdate] = useState(false)
 
 
   const addRows = (isDateField) => {
@@ -77,11 +75,23 @@ function App() {
     setLayout(filteredFields)
   }
 
+  const atualizarButton = () => {
+    setButtonUpdate((prevState) => !prevState)
+  }
 
+
+
+
+/*==================CHAMADA ABA UPDATE==========================*/
   // Função para alternar entre a aba existente e a nova aba
   const alternarAba = () => {
     setMostrarNovaAba((prevState) => !prevState);
   };
+
+  const onClick = () => { 
+    atualizarButton()
+    alternarAba();
+  }
 
   return (
     <Container className={classes.root}>
@@ -102,7 +112,7 @@ function App() {
         variant="contained" 
           color="default"
           className={classes.tabButton}
-          onClick={alternarAba}
+          onClick={onClick}
         >
         {mostrarNovaAba ? 'Voltar Para Criação' : 'Atualizar layout'}
         </Button>
@@ -114,20 +124,26 @@ function App() {
                changeField={changeField}
                onChange={onChange}
                removeField={removeField}
-               addRows={addRows}t
+               addRows={addRows}
+               buttonUpdate={buttonUpdate}
                /> 
         ))
           : <AbaPrincipal /> }
-          {mostrarNovaAba == true ? <TeamButtons addRows={addRows} /> :  null}
+          {mostrarNovaAba ? <TeamButtons addRows={addRows} buttonUpdate={buttonUpdate} /> :  null}
       </Paper>
     </Container>
   );
 }
+/*==========================FIM CHAMADA UPDATE===============================*/
 
+
+
+/*==================ABA PRINCIPAL==========================*/
 // Componente para a aba existente
 const AbaPrincipal = ({}) => {
   const layoutTemplate = { name: "", pinicial: "", pfinal: "", size: "" };
   const [layouts, setLayout] = useState([layoutTemplate,]);
+  const [buttonUpdate] = useState(false)
 
   
 
@@ -177,9 +193,10 @@ const AbaPrincipal = ({}) => {
         />
       ))}
       <FileUploadButton onFileUpload={handleFileUpload}  />
-      <TeamButtons addRows={addRows} />
+      <TeamButtons addRows={addRows} buttonUpdate={buttonUpdate}/>
     </>
    )
 }
-
+/*==========================FIM CHAMADA ABA PRINCIPAL===============================*/
 export default App;
+/*==========================FIM CHAMADA APP===============================*/
